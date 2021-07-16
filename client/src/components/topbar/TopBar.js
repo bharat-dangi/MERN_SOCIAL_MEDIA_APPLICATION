@@ -3,10 +3,18 @@ import { Chat, Notifications, Person, Search } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const TopBar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const history = useHistory();
+
+  const logOut = () => {
+    dispatch({ type: "LOGOUT" });
+    history.push("/login");
+  };
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -41,6 +49,9 @@ const TopBar = () => {
             <Notifications />
             <span className="topbarIconBadge">1</span>
           </div>
+        </div>
+        <div className="topbarLinks" onClick={logOut}>
+          <span className="topbarLink">LogOut</span>
         </div>
         <Link to={`/profile/${user.username}`}>
           <img
