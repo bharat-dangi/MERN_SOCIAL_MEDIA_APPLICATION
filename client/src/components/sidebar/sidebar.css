@@ -36,6 +36,7 @@
 
 .sidebarIcon {
   margin-right: 15px;
+  color: #000000;
 }
 
 .sidebarButton {
@@ -54,4 +55,8 @@
   padding: 0;
   margin: 0;
   list-style: none;
+}
+
+.sidebarListItemText {
+  color: #0d0d0d;
 }
