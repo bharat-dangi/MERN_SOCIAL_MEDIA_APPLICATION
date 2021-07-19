@@ -44,6 +44,9 @@ const Login = () => {
               className="loginInput"
               ref={password}
             />
+            <div className="errorMessageContainer">
+              <span className="errorMessage">{error}</span>
+            </div>
             <button className="loginButton" disabled={isFetching}>
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />

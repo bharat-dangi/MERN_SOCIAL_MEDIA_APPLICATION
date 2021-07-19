@@ -1,9 +1,8 @@
 import "./topbar.css";
 import { Chat, Notifications, Person, Search } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const TopBar = () => {
   const { user, dispatch } = useContext(AuthContext);
@@ -30,8 +29,15 @@ const TopBar = () => {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <span className="topbarLink">Homepage</span>
+          </Link>
+          <Link
+            to={`/profile/${user.username}`}
+            style={{ textDecoration: "none" }}
+          >
+            <span className="topbarLink">Timeline</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -40,8 +46,7 @@ const TopBar = () => {
           </div>
           <Link to="messenger" style={{ textDecoration: "none" }}>
             <div className="topbarIconItem">
-              <Chat />
-
+              <Chat style={{ color: "white" }} />
               <span className="topbarIconBadge">1</span>
             </div>
           </Link>

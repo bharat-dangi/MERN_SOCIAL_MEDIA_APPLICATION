@@ -31,6 +31,8 @@ const RightBar = ({ user }) => {
     getFriends();
   }, [user]);
 
+  console.log("FRIEND LIST", friends);
+
   const handleClick = async () => {
     try {
       if (followed) {
@@ -65,6 +67,9 @@ const RightBar = ({ user }) => {
           {Users.map((u) => (
             <Online key={u.id} user={u} />
           ))}
+          {/* {friends.map((friend) => (
+            <Online key={friend.id} user={friend} />
+          ))} */}
         </ul>
       </>
     );

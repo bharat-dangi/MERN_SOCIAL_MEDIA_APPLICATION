@@ -1,4 +1,3 @@
-import Home from "./pages/home/Home";
 import Routes from "./Routes";
 
 function App() {

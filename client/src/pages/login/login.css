@@ -74,7 +74,7 @@
   outline: none;
 }
 
-.loginButton:disabled{
+.loginButton:disabled {
   cursor: not-allowed;
 }
 
@@ -94,4 +94,13 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.errorMessageContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.errorMessage {
+  color: red;
 }
