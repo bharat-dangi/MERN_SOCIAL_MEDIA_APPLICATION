@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 dotenv.config();
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 //routes import
 const userRoutes = require("./routes/user");
@@ -35,6 +37,8 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
+app.use(cors());
+app.use(cookieParser());
 
 //Image file upload
 const storage = multer.diskStorage({

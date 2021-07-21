@@ -1,17 +1,20 @@
 import "./topbar.css";
 import { Chat, Notifications, Person, Search } from "@material-ui/icons";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../constants/auth";
 
 const TopBar = () => {
-  const { user, dispatch } = useContext(AuthContext);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: LOGOUT });
     history.push("/login");
+    setUser(null);
   };
 
   return (
@@ -33,7 +36,7 @@ const TopBar = () => {
             <span className="topbarLink">Homepage</span>
           </Link>
           <Link
-            to={`/profile/${user.username}`}
+            to={`/profile/${user?.username}`}
             style={{ textDecoration: "none" }}
           >
             <span className="topbarLink">Timeline</span>

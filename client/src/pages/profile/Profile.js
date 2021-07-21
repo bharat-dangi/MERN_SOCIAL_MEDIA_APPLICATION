@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import SideBar from "../../components/sidebar/SideBar";
 import TopBar from "../../components/topbar/TopBar";
 import Feed from "../../components/feed/Feed";
@@ -6,13 +6,12 @@ import RightBar from "../../components/rightbar/RightBar";
 import "./profile.css";
 import axios from "axios";
 import { useParams } from "react-router";
-import { AuthContext } from "../../context/AuthContext";
 
 const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const { username } = useParams();
-  const { user: currentUser } = useContext(AuthContext);
+  const currentUser = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
     const fetchUser = async () => {

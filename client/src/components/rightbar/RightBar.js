@@ -1,16 +1,15 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import "./rightbar.css";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 
 const RightBar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
-  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const  currentUser  = JSON.parse(localStorage.getItem("profile"));
   const [followed, setFollowed] = useState(
     currentUser.followings.includes(user?.id)
   );
@@ -34,22 +33,22 @@ const RightBar = ({ user }) => {
   console.log("FRIEND LIST", friends);
 
   const handleClick = async () => {
-    try {
-      if (followed) {
-        await axios.put("/users/" + user._id + "/unfollow", {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
-      } else {
-        await axios.put("/users/" + user._id + "/follow", {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "FOLLOW", payload: user._id });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setFollowed(!followed);
+    // try {
+    //   if (followed) {
+    //     await axios.put("/users/" + user._id + "/unfollow", {
+    //       userId: currentUser._id,
+    //     });
+    //     dispatch({ type: "UNFOLLOW", payload: user._id });
+    //   } else {
+    //     await axios.put("/users/" + user._id + "/follow", {
+    //       userId: currentUser._id,
+    //     });
+    //     dispatch({ type: "FOLLOW", payload: user._id });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // setFollowed(!followed);
   };
 
   const HomeRightBar = () => {

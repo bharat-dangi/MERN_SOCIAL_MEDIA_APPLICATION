@@ -1,13 +1,12 @@
 import Share from "../share/Share";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Post from "../post/Post";
 import "./feed.css";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
-  const { user } = useContext(AuthContext);
+  const user  = JSON.parse(localStorage.getItem("profile"));
   useEffect(() => {
     const fetchPosts = async () => {
       const res = username

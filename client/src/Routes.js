@@ -1,11 +1,9 @@
-import { useContext } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
 } from "react-router-dom";
-import { AuthContext } from "./context/AuthContext";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Messenger from "./pages/messenger/Messenger";
@@ -13,7 +11,8 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 
 const Routes = () => {
-  const { user } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem("profile")) || null;
+  console.log(user);
   return (
     <Router>
       <Switch>

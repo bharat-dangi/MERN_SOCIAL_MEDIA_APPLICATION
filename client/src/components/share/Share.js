@@ -6,12 +6,11 @@ import {
   PermMedia,
   Room,
 } from "@material-ui/icons";
-import { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useRef, useState } from "react";
 import axios from "axios";
 
 const Share = () => {
-  const { user } = useContext(AuthContext);
+  const user = JSON.parse(localStorage.getItem("profile"));
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
   const desc = useRef();

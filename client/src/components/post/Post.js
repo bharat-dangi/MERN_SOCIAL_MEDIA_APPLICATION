@@ -1,16 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
 import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const { user: currentUser } = useContext(AuthContext);
+  const  currentUser  = JSON.parse(localStorage.getItem("profile"));
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 

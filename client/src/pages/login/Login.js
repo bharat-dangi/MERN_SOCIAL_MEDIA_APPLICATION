@@ -1,21 +1,25 @@
-import { useContext, useRef } from "react";
-import { loginCall } from "../../apiCalls";
-import { AuthContext } from "../../context/AuthContext";
+import { useRef } from "react";
 import "./login.css";
 import { CircularProgress } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../actions/auth";
 
 const Login = () => {
   const email = useRef();
   const password = useRef();
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const isFetching = false;
+  const error = false;
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
-    loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+    const user = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+    dispatch(signIn(user, history));
   };
 
   return (

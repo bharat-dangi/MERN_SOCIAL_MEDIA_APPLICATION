@@ -3,8 +3,7 @@ import TopBar from "../../components/topbar/TopBar";
 import Conversation from "../../components/conversation/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
-import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 
@@ -15,7 +14,7 @@ const Messenger = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const { user } = useContext(AuthContext);
+  const { user } = JSON.parse(localStorage.getItem("profile"));
   const scrollRef = useRef();
   const socket = useRef();
 
