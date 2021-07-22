@@ -46,15 +46,15 @@ const Share = () => {
         <div className="shareTop">
           <img
             src={
-              user.profilePicture
-                ? PF + user.profilePicture
+              user?.profilePicture
+                ? PF + user?.profilePicture
                 : PF + "person/noAvatar.png"
             }
             alt=""
             className="shareProfileImg"
           />
           <input
-            placeholder={"What's in your mind " + user.username + "?"}
+            placeholder={"What's in your mind " + user?.username + "?"}
             className="shareInput"
             ref={desc}
           />

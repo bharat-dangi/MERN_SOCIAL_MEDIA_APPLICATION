@@ -61,11 +61,11 @@ const TopBar = () => {
         <div className="topbarLinks" onClick={logOut}>
           <span className="topbarLink">LogOut</span>
         </div>
-        <Link to={`/profile/${user.username}`}>
+        <Link to={`/profile/${user?.username}`}>
           <img
             src={
-              user.profilePicture
-                ? PF + user.profilePicture
+              user?.profilePicture
+                ? PF + user?.profilePicture
                 : PF + "person/noAvatar.png"
             }
             alt=""

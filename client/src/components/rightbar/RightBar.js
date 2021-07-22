@@ -11,11 +11,11 @@ const RightBar = ({ user }) => {
   const [friends, setFriends] = useState([]);
   const  currentUser  = JSON.parse(localStorage.getItem("profile"));
   const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
+    currentUser?.followings.includes(user?.id)
   );
 
   useEffect(() => {
-    setFollowed(currentUser.followings.includes(user?.id));
+    setFollowed(currentUser?.followings.includes(user?.id));
   }, [currentUser, user]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const RightBar = ({ user }) => {
   const ProfileRightBar = () => {
     return (
       <>
-        {user.username !== currentUser.username && (
+        {user?.username !== currentUser?.username && (
           <button className="rightbarFollowButton" onClick={handleClick}>
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
@@ -87,19 +87,19 @@ const RightBar = ({ user }) => {
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">{user.city}</span>
+            <span className="rightbarInfoValue">{user?.city}</span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">{user.from}</span>
+            <span className="rightbarInfoValue">{user?.from}</span>
           </div>
 
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Realtionship:</span>
             <span className="rightbarInfoValue">
-              {user.relationship === 1
+              {user?.relationship === 1
                 ? "Single"
-                : user.relationship === 2
+                : user?.relationship === 2
                 ? "Married"
                 : "Not Mentioned"}
             </span>
@@ -109,20 +109,20 @@ const RightBar = ({ user }) => {
         <div className="rightbarFollowings">
           {friends.map((friend) => (
             <Link
-              to={"/profile/" + friend.username}
+              to={"/profile/" + friend?.username}
               style={{ textDecoration: "none" }}
             >
               <div className="rightbarFollowing">
                 <img
                   src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
+                    friend?.profilePicture
+                      ? PF + friend?.profilePicture
                       : PF + "person/noAvatar.png"
                   }
                   alt=""
                   className="rightbarFollowingImg"
                 />
-                <span className="rightbarFollowingName">{friend.username}</span>
+                <span className="rightbarFollowingName">{friend?.username}</span>
               </div>
             </Link>
           ))}

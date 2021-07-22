@@ -12,13 +12,12 @@ import Register from "./pages/register/Register";
 
 const Routes = () => {
   const user = JSON.parse(localStorage.getItem("profile")) || null;
-  console.log(user);
+
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          {user ? <Home /> : <Register />}
-        </Route>
+        <Route exact path="/" component={Home} />
+
         <Route exact path="/login">
           {user ? <Redirect to="/" /> : <Login />}
         </Route>

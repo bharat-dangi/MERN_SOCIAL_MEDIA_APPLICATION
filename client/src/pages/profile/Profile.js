@@ -1,25 +1,29 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import SideBar from "../../components/sidebar/SideBar";
 import TopBar from "../../components/topbar/TopBar";
 import Feed from "../../components/feed/Feed";
 import RightBar from "../../components/rightbar/RightBar";
 import "./profile.css";
-import axios from "axios";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAUser } from "../../actions/user";
+import { getProfilePost } from "../../actions/post";
 
 const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [user, setUser] = useState({});
+
   const { username } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("profile"));
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/users?username=${username}`);
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [username]);
+    dispatch(fetchAUser(username));
+  }, [username, dispatch]);
+
+  useEffect(() => {
+    dispatch(getProfilePost(username));
+  }, [username, dispatch]);
   return (
     <>
       <TopBar />
@@ -30,8 +34,8 @@ const Profile = () => {
             <div className="profileCover">
               <img
                 src={
-                  currentUser.coverPicture
-                    ? PF + user.coverPicture
+                  currentUser?.coverPicture
+                    ? PF + user?.coverPicture
                     : PF + "person/noCover.png"
                 }
                 alt=""
@@ -40,8 +44,8 @@ const Profile = () => {
 
               <img
                 src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
+                  user?.profilePicture
+                    ? PF + user?.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
@@ -49,8 +53,8 @@ const Profile = () => {
               />
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">{user.username}</h4>
-              <span className="profileInfoDesc">{user.desc}</span>
+              <h4 className="profileInfoName">{user?.username}</h4>
+              <span className="profileInfoDesc">{user?.desc}</span>
             </div>
           </div>
           <div className="profileRightBottom">
