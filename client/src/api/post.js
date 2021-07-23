@@ -9,3 +9,7 @@ export const getProfilePost = (username) =>
   API.get(`posts/profile/${username}`);
 
 export const getTimelinePost = (userId) => API.get(`posts/timeline/${userId}`);
+
+export const uploadPostFile = (data) => API.post("upload", data);
+
+export const createPost = (postData) => API.post("posts", postData);

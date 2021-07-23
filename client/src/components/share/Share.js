@@ -7,7 +7,8 @@ import {
   Room,
 } from "@material-ui/icons";
 import { useRef, useState } from "react";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { createPost, uploadPostFile } from "../../actions/post";
 
 const Share = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -15,7 +16,9 @@ const Share = () => {
   const [file, setFile] = useState(null);
   const desc = useRef();
 
-  const submitHandler = async (e) => {
+  const dispatch = useDispatch();
+
+  const submitHandler = (e) => {
     e.preventDefault();
     const newPost = {
       userId: user._id,
@@ -29,15 +32,16 @@ const Share = () => {
 
       newPost.img = fileName;
       try {
-        await axios.post("/upload", data);
+        dispatch(uploadPostFile(data));
       } catch (error) {
         console.log(error);
       }
     }
     try {
-      await axios.post("/posts", newPost);
-      window.location.reload();
-    } catch (error) {}
+      dispatch(createPost(newPost));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
