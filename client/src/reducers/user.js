@@ -2,6 +2,8 @@ import {
   FETCH_A_USER,
   FETCH_FRIEND_LIST,
   FETCH_POST_USER,
+  FOLLOW,
+  UNFOLLOW,
 } from "../constants/user";
 
 const userReducer = (state = { user: [], friendList: [] }, action) => {
@@ -14,6 +16,10 @@ const userReducer = (state = { user: [], friendList: [] }, action) => {
 
     case FETCH_FRIEND_LIST:
       return { ...state, friendList: action?.payload };
+
+    case FOLLOW:
+    case UNFOLLOW:
+      return state;
 
     default:
       return state;

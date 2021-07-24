@@ -5,7 +5,7 @@ import "./rightbar.css";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFriendList } from "../../actions/user";
+import { fetchFriendList, followUser, unFollowUser } from "../../actions/user";
 
 const RightBar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -13,14 +13,10 @@ const RightBar = ({ user }) => {
   const currentUser = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(
-    currentUser?.followings.includes(user?.id)
+    user?.followers.includes(currentUser?._id)
   );
 
   const friendList = useSelector((state) => state.userReducer.friendList);
-
-  useEffect(() => {
-    setFollowed(currentUser?.followings.includes(user?.id));
-  }, [currentUser, user]);
 
   useEffect(() => {
     dispatch(fetchFriendList(user?._id));
@@ -30,23 +26,17 @@ const RightBar = ({ user }) => {
     if (friendList) setFriends(friendList);
   }, [friendList]);
 
-  const handleClick = async () => {
-    // try {
-    //   if (followed) {
-    //     await axios.put("/users/" + user._id + "/unfollow", {
-    //       userId: currentUser._id,
-    //     });
-    //     dispatch({ type: "UNFOLLOW", payload: user._id });
-    //   } else {
-    //     await axios.put("/users/" + user._id + "/follow", {
-    //       userId: currentUser._id,
-    //     });
-    //     dispatch({ type: "FOLLOW", payload: user._id });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // setFollowed(!followed);
+  const handleClick = (e) => {
+    e.preventDefault();
+    const followerUserId = {
+      userId: currentUser._id,
+    };
+    if (followed) {
+      dispatch(unFollowUser(user._id, followerUserId));
+    } else {
+      dispatch(followUser(user._id, followerUserId));
+    }
+    setFollowed(!followed);
   };
 
   const HomeRightBar = () => {
@@ -64,9 +54,9 @@ const RightBar = ({ user }) => {
           {Users.map((u) => (
             <Online key={u.id} user={u} />
           ))}
-          {/* {friends.map((friend) => (
+          {friends.map((friend) => (
             <Online key={friend.id} user={friend} />
-          ))} */}
+          ))}
         </ul>
       </>
     );

@@ -3,6 +3,8 @@ import {
   FETCH_A_USER,
   FETCH_FRIEND_LIST,
   FETCH_POST_USER,
+  FOLLOW,
+  UNFOLLOW,
 } from "../constants/user";
 
 export const fetchAUser = (username) => async (dispatch) => {
@@ -27,6 +29,24 @@ export const fetchFriendList = (userId) => async (dispatch) => {
   try {
     const { data } = await api.fetchFriendList(userId);
     dispatch({ type: FETCH_FRIEND_LIST, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const followUser = (userId, followerUserId) => async (dispatch) => {
+  try {
+    await api.followUser(userId, followerUserId);
+    dispatch({ type: FOLLOW });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unFollowUser = (userId, followerUserId) => async (dispatch) => {
+  try {
+    await api.unFollowUser(userId, followerUserId);
+    dispatch({ type: UNFOLLOW });
   } catch (error) {
     console.log(error);
   }

@@ -10,3 +10,9 @@ export const fetchAUser = (username) => API.get(`users?username=${username}`);
 export const fetchPostUser = (userId) => API.get(`users?userId=${userId}`);
 
 export const fetchFriendList = (userId) => API.get(`users/friends/${userId}`);
+
+export const followUser = (userId, followerUserId) =>
+  API.put(`users/${userId}/follow`, followerUserId);
+
+export const unFollowUser = (userId, followerUserId) =>
+  API.put(`users/${userId}/unfollow`, followerUserId);
