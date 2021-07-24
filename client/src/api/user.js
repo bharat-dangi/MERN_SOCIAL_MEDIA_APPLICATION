@@ -6,3 +6,5 @@ const API = axios.create({
 });
 
 export const fetchAUser = (username) => API.get(`users?username=${username}`);
+
+export const fetchPostUser = (userId) => API.get(`users?userId=${userId}`);

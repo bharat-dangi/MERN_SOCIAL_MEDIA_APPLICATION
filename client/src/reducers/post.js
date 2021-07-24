@@ -2,6 +2,7 @@ import {
   CREATE_POST,
   GET_PROFILE_POST,
   GET_TIMELINE_POST,
+  LIKE_A_POST,
   UPLOAD_POST_FILE,
 } from "../constants/post";
 
@@ -12,8 +13,11 @@ const postReducer = (state = { post: [] }, action) => {
       return { ...state, post: action?.payload };
 
     case UPLOAD_POST_FILE:
-    case CREATE_POST:
+    case LIKE_A_POST:
       return state;
+
+    case CREATE_POST:
+      return { ...state, post: [...state.post, action.payload] };
 
     default:
       return state;

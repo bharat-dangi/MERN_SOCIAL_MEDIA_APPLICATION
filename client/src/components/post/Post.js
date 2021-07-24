@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import axios from "axios";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { fetchAUser } from "../../actions/user";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPostUser } from "../../actions/user";
+import { likeAPost } from "../../actions/post";
 
 const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes?.length);
@@ -13,6 +13,9 @@ const Post = ({ post }) => {
   const [user, setUser] = useState({});
   const currentUser = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
+  const postUser = useSelector((state) =>
+    post ? state.userReducer.postUser?.find((p) => p._id === post.userId) : null
+  );
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -21,19 +24,19 @@ const Post = ({ post }) => {
   }, [currentUser?._id, post.likes]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
-      setUser(res.data);
-    };
-    fetchUser();
-  }, [post.userId]);
+    dispatch(fetchPostUser(post.userId));
+  }, [post.userId, dispatch]);
 
-  const likeHandler = () => {
-    try {
-      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
-    } catch (error) {
-      console.log(error);
-    }
+  useEffect(() => {
+    if (postUser) setUser(postUser);
+  }, [postUser]);
+
+  const likeHandler = (e) => {
+    e.preventDefault();
+    const likerUserId = {
+      userId: currentUser._id,
+    };
+    dispatch(likeAPost(post._id, likerUserId));
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -42,7 +45,7 @@ const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${user.username}`} >
+            <Link to={`profile/${user.username}`}>
               <img
                 src={
                   user.profilePicture

@@ -13,3 +13,6 @@ export const getTimelinePost = (userId) => API.get(`posts/timeline/${userId}`);
 export const uploadPostFile = (data) => API.post("upload", data);
 
 export const createPost = (postData) => API.post("posts", postData);
+
+export const likeAPost = (postId, likerUserId) =>
+  API.put(`posts/${postId}/like`, likerUserId);

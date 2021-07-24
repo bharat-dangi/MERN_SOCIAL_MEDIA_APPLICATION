@@ -3,6 +3,7 @@ import {
   CREATE_POST,
   GET_PROFILE_POST,
   GET_TIMELINE_POST,
+  LIKE_A_POST,
   UPLOAD_POST_FILE,
 } from "../constants/post";
 
@@ -36,9 +37,17 @@ export const uploadPostFile = (data) => async (dispatch) => {
 };
 export const createPost = (newPost) => async (dispatch) => {
   try {
-    await api.createPost(newPost);
-    dispatch({ type: CREATE_POST });
-    window.location.reload();
+    const { data } = await api.createPost(newPost);
+    dispatch({ type: CREATE_POST, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likeAPost = (postId, likerUserId) => async (dispatch) => {
+  try {
+    await api.likeAPost(postId, likerUserId);
+    dispatch({ type: LIKE_A_POST });
   } catch (error) {
     console.log(error);
   }
