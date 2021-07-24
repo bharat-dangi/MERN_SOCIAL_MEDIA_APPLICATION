@@ -15,7 +15,9 @@ const Profile = () => {
   const { username } = useParams();
   const currentUser = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.userReducer);
+  const user = useSelector((state) =>
+    state.userReducer.user?.find((u) => u.username === username)
+  );
 
   useEffect(() => {
     dispatch(fetchAUser(username));

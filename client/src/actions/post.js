@@ -10,7 +10,7 @@ import {
 export const getProfilePost = (username) => async (dispatch) => {
   try {
     const { data } = await api.getProfilePost(username);
-    console.log("PROFILE POST", data);
+
     dispatch({ type: GET_PROFILE_POST, payload: data });
   } catch (error) {
     console.log(error);

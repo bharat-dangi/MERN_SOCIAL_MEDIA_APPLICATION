@@ -1,36 +1,34 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import "./rightbar.css";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFriendList } from "../../actions/user";
 
 const RightBar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
-  const  currentUser  = JSON.parse(localStorage.getItem("profile"));
+  const currentUser = JSON.parse(localStorage.getItem("profile"));
+  const dispatch = useDispatch();
   const [followed, setFollowed] = useState(
     currentUser?.followings.includes(user?.id)
   );
+
+  const friendList = useSelector((state) => state.userReducer.friendList);
 
   useEffect(() => {
     setFollowed(currentUser?.followings.includes(user?.id));
   }, [currentUser, user]);
 
   useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const friendList = await axios.get("/users/friends/" + user._id);
-        setFriends(friendList.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getFriends();
-  }, [user]);
+    dispatch(fetchFriendList(user?._id));
+  }, [user, dispatch]);
 
-  console.log("FRIEND LIST", friends);
+  useEffect(() => {
+    if (friendList) setFriends(friendList);
+  }, [friendList]);
 
   const handleClick = async () => {
     // try {
@@ -122,7 +120,9 @@ const RightBar = ({ user }) => {
                   alt=""
                   className="rightbarFollowingImg"
                 />
-                <span className="rightbarFollowingName">{friend?.username}</span>
+                <span className="rightbarFollowingName">
+                  {friend?.username}
+                </span>
               </div>
             </Link>
           ))}

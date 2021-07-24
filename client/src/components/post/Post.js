@@ -14,7 +14,7 @@ const Post = ({ post }) => {
   const currentUser = JSON.parse(localStorage.getItem("profile"));
   const dispatch = useDispatch();
   const postUser = useSelector((state) =>
-    post ? state.userReducer.postUser?.find((p) => p._id === post.userId) : null
+    post ? state.userReducer.user?.find((u) => u._id === post.userId) : null
   );
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
