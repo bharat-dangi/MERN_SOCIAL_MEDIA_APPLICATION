@@ -4,6 +4,8 @@ import {
   FETCH_POST_USER,
   FOLLOW,
   UNFOLLOW,
+  UPLOAD_COVER_IMG,
+  UPLOAD_PROFILE_IMG,
 } from "../constants/user";
 
 const userReducer = (state = { user: [], friendList: [] }, action) => {
@@ -21,11 +23,29 @@ const userReducer = (state = { user: [], friendList: [] }, action) => {
     case UNFOLLOW:
       return state;
 
+    case UPLOAD_COVER_IMG:
+      return {
+        ...state,
+        user: state.user.map((u) =>
+          u._id === action.payload.userId
+            ? { ...u, coverPicture: action.payload.coverPicture }
+            : u
+        ),
+      };
+
+    case UPLOAD_PROFILE_IMG:
+      return {
+        ...state,
+        user: state.user.map((u) =>
+          u._id === action.payload.userId
+            ? { ...u, profilePicture: action.payload.profilePicture }
+            : u
+        ),
+      };
+
     default:
       return state;
   }
 };
 
 export default userReducer;
-// , postUser: []
-// postUser: [...state.postUser, action.payload]

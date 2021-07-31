@@ -1,15 +1,24 @@
 import "./topbar.css";
 import { Chat, Notifications, Person, Search } from "@material-ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOGOUT } from "../../constants/auth";
 
 const TopBar = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [user, setUser] = useState();
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const history = useHistory();
   const dispatch = useDispatch();
+  const loggedUser = JSON.parse(localStorage.getItem("profile"));
+
+  const activeUser = useSelector((state) =>
+    state.userReducer.user?.find((u) => u._id === loggedUser?._id)
+  );
+
+  useEffect(() => {
+    if (activeUser) setUser(activeUser);
+  }, [activeUser]);
 
   const logOut = () => {
     dispatch({ type: LOGOUT });

@@ -3,3 +3,5 @@ export const FETCH_POST_USER = "FETCH_POST_USER";
 export const FETCH_FRIEND_LIST = "FETCH_FRIEND_LIST";
 export const FOLLOW = "FOLLOW";
 export const UNFOLLOW = "UNFOLLOW";
+export const UPLOAD_COVER_IMG = "UPLOAD_COVER_IMG";
+export const UPLOAD_PROFILE_IMG = "UPLOAD_PROFILE_IMG";

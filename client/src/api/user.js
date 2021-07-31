@@ -16,3 +16,9 @@ export const followUser = (userId, followerUserId) =>
 
 export const unFollowUser = (userId, followerUserId) =>
   API.put(`users/${userId}/unfollow`, followerUserId);
+
+export const uploadCoverImg = (coverImg) =>
+  API.patch("users/uploadCoverImg", coverImg);
+
+export const uploadProfileImg = (profileImg) =>
+  API.patch("users/uploadProfileImg", profileImg);

@@ -5,6 +5,8 @@ import {
   FETCH_POST_USER,
   FOLLOW,
   UNFOLLOW,
+  UPLOAD_COVER_IMG,
+  UPLOAD_PROFILE_IMG,
 } from "../constants/user";
 
 export const fetchAUser = (username) => async (dispatch) => {
@@ -47,6 +49,28 @@ export const unFollowUser = (userId, followerUserId) => async (dispatch) => {
   try {
     await api.unFollowUser(userId, followerUserId);
     dispatch({ type: UNFOLLOW });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadCoverImg = (coverImg) => async (dispatch) => {
+  try {
+
+    const { data } = await api.uploadCoverImg(coverImg);
+    dispatch({ type: UPLOAD_COVER_IMG, payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadProfileImg = (profileImg) => async (dispatch) => {
+  try {
+    
+
+    const { data } = await api.uploadProfileImg(profileImg);
+    console.log("PROFILE ",data);
+    dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
   } catch (error) {
     console.log(error);
   }

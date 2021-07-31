@@ -7,17 +7,22 @@ import {
   Room,
 } from "@material-ui/icons";
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost, uploadPostFile } from "../../actions/post";
 
 const Share = () => {
-  const user = JSON.parse(localStorage.getItem("profile"));
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
   const desc = useRef();
 
   const dispatch = useDispatch();
 
+  const loggedUser = JSON.parse(localStorage.getItem("profile"));
+
+  const user = useSelector((state) =>
+    state.userReducer.user?.find((u) => u._id === loggedUser?._id)
+  );
+ 
   const submitHandler = (e) => {
     e.preventDefault();
     const newPost = {
