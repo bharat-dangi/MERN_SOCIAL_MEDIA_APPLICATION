@@ -129,3 +129,31 @@ exports.getFriends = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+exports.uploadCoverImage = async (req, res) => {
+  const { userId, coverPicture } = req.body;
+  try {
+    const user = await User.findById(userId);
+    await user.updateOne({
+      $set: { coverPicture: coverPicture },
+    });
+    res.status(200).json({ userId, coverPicture });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
+exports.uploadProfileImage = async (req, res) => {
+  const { userId, profilePicture } = req.body;
+  try {
+    const user = await User.findById(userId);
+    await user.updateOne({
+      $set: { profilePicture: profilePicture },
+    });
+    res.status(200).json({ userId, profilePicture });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
