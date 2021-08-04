@@ -8,8 +8,11 @@ const {
   getFriends,
   uploadCoverImage,
   uploadProfileImage,
+  uploadImage,
 } = require("../controllers/user");
 const router = express.Router();
+const fileUploader = require("../config/cloudinary.config");
+const User = require("../models/User");
 
 //update user
 router.put("/:id", updateUser);
@@ -29,10 +32,11 @@ router.put("/:id/follow", followUser);
 //unfollow a user
 router.put("/:id/unfollow", unFollowUser);
 
-//upload cover Image
-router.patch("/uploadCoverImg", uploadCoverImage);
-
-//upload Profile Image
-router.patch("/uploadProfileImg", uploadProfileImage);
+//upload image
+router.patch(
+  "/:username/uploadImage",
+  fileUploader.single("file"),
+  uploadImage
+);
 
 module.exports = router;

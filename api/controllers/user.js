@@ -130,30 +130,34 @@ exports.getFriends = async (req, res) => {
   }
 };
 
-exports.uploadCoverImage = async (req, res) => {
-  const { userId, coverPicture } = req.body;
-  try {
-    const user = await User.findById(userId);
-    await user.updateOne({
-      $set: { coverPicture: coverPicture },
-    });
-    res.status(200).json({ userId, coverPicture });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-};
+exports.uploadImage = async (req, res) => {
+  const { username } = req.params;
+  const profile = req.body.profile;
 
-exports.uploadProfileImage = async (req, res) => {
-  const { userId, profilePicture } = req.body;
-  try {
-    const user = await User.findById(userId);
-    await user.updateOne({
-      $set: { profilePicture: profilePicture },
-    });
-    res.status(200).json({ userId, profilePicture });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
+  if (!req.file) {
+    res.status(404).json({ error: "No file uploaded!" });
+  }
+
+  if (profile) {
+    try {
+      const user = await User.findOne({ username: username });
+
+      await user.updateOne({
+        $set: { profilePicture: req.file.path },
+      });
+      res.status(200).json({ username, url: req.file.path, profile: true });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    try {
+      const user = await User.findOne({ username: username });
+      await user.updateOne({
+        $set: { coverPicture: req.file.path },
+      });
+      res.status(200).json({ username, url: req.file.path, profile: false });
+    } catch (error) {
+      res.status(500).json(error);
+    }
   }
 };
