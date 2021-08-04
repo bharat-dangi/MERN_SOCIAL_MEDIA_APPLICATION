@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 //REGISTER LOGIC
 exports.register = async (req, res) => {
   try {
+    
     //generate hashed password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);

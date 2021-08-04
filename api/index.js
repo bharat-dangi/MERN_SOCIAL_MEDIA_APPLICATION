@@ -40,25 +40,6 @@ app.use(morgan("common"));
 app.use(cors());
 app.use(cookieParser());
 
-//Image file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, req.body.name);
-  },
-});
-
-const upload = multer({ storage });
-app.post("/api/upload", upload.single("file"), (req, res) => {
-  try {
-    return res.status(200).json("File uploaded successfully");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 //routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
