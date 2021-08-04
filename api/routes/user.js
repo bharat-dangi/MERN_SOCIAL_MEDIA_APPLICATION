@@ -6,13 +6,10 @@ const {
   followUser,
   unFollowUser,
   getFriends,
-  uploadCoverImage,
-  uploadProfileImage,
   uploadImage,
 } = require("../controllers/user");
 const router = express.Router();
 const fileUploader = require("../config/cloudinary.config");
-const User = require("../models/User");
 
 //update user
 router.put("/:id", updateUser);

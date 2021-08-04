@@ -2,7 +2,14 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 
 exports.createAPost = async (req, res) => {
-  const newPost = new Post(req.body);
+  const desc = req.body.desc;
+  const userId = req.body.userId;
+  const img = req.file ? req.file.path : null;
+  const newPost = new Post({
+    userId,
+    desc,
+    img,
+  });
   try {
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);

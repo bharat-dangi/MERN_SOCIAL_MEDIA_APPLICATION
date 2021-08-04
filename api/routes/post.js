@@ -8,11 +8,12 @@ const {
   getTimelinePosts,
   getUserAllPosts,
 } = require("../controllers/post");
+const fileUploader = require("../config/cloudinary.config");
 
 const router = express.Router();
 
 //create a post
-router.post("/", createAPost);
+router.post("/", fileUploader.single("file"), createAPost);
 
 //update a post
 router.put("/:id", updatePost);
