@@ -49,7 +49,7 @@ const Post = ({ post }) => {
               <img
                 src={
                   user.profilePicture
-                    ? PF + user.profilePicture
+                    ?  user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""

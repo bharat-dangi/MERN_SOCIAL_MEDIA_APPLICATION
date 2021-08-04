@@ -27,8 +27,8 @@ const userReducer = (state = { user: [], friendList: [] }, action) => {
       return {
         ...state,
         user: state.user.map((u) =>
-          u._id === action.payload.userId
-            ? { ...u, coverPicture: action.payload.coverPicture }
+          u.username === action.payload.username
+            ? { ...u, coverPicture: action.payload.url }
             : u
         ),
       };
@@ -37,8 +37,8 @@ const userReducer = (state = { user: [], friendList: [] }, action) => {
       return {
         ...state,
         user: state.user.map((u) =>
-          u._id === action.payload.userId
-            ? { ...u, profilePicture: action.payload.profilePicture }
+          u.username === action.payload.username
+            ? { ...u, profilePicture: action.payload.url }
             : u
         ),
       };

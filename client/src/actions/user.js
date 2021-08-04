@@ -54,23 +54,14 @@ export const unFollowUser = (userId, followerUserId) => async (dispatch) => {
   }
 };
 
-export const uploadCoverImg = (coverImg) => async (dispatch) => {
+export const uploadImage = (fileToUpload, username) => async (dispatch) => {
   try {
-
-    const { data } = await api.uploadCoverImg(coverImg);
-    dispatch({ type: UPLOAD_COVER_IMG, payload: data });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const uploadProfileImg = (profileImg) => async (dispatch) => {
-  try {
-    
-
-    const { data } = await api.uploadProfileImg(profileImg);
-    console.log("PROFILE ",data);
-    dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
+    const { data } = await api.uploadImage(fileToUpload, username);
+    if (data.profile === true) {
+      dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
+    } else {
+      dispatch({ type: UPLOAD_COVER_IMG, payload: data });
+    }
   } catch (error) {
     console.log(error);
   }

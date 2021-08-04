@@ -6,12 +6,8 @@ import RightBar from "../../components/rightbar/RightBar";
 import "./profile.css";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAUser,
-  uploadCoverImg,
-  uploadProfileImg,
-} from "../../actions/user";
-import { getProfilePost, uploadPostFile } from "../../actions/post";
+import { fetchAUser, uploadImage } from "../../actions/user";
+import { getProfilePost } from "../../actions/post";
 import { Cancel } from "@material-ui/icons";
 import CheckCircleSharpIcon from "@material-ui/icons/CheckCircleSharp";
 
@@ -37,43 +33,23 @@ const Profile = () => {
 
   const handleCoverImgUpload = (e) => {
     e.preventDefault();
-    const coverImg = {
-      userId: user._id,
-    };
+    const data = new FormData();
     if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
       data.append("file", file);
-      coverImg.coverPicture = fileName;
-      try {
-        dispatch(uploadPostFile(data));
-      } catch (error) {
-        console.log(error);
-      }
     }
-    dispatch(uploadCoverImg(coverImg));
+    dispatch(uploadImage(data, username));
     setFile(null);
   };
 
   const handleProfileImgUpload = (e) => {
     e.preventDefault();
-    const profileImg = {
-      userId: user._id,
-    };
+    const data = new FormData();
+
     if (profileFile) {
-      const data = new FormData();
-      const fileName = Date.now() + profileFile.name;
-      data.append("name", fileName);
       data.append("file", profileFile);
-      profileImg.profilePicture = fileName;
-      try {
-        dispatch(uploadPostFile(data));
-      } catch (error) {
-        console.log(error);
-      }
+      data.append("profile", true);
     }
-    dispatch(uploadProfileImg(profileImg));
+    dispatch(uploadImage(data, username));
     setProfileFile(null);
   };
 
@@ -106,7 +82,7 @@ const Profile = () => {
                   <img
                     src={
                       user?.coverPicture
-                        ? PF + user?.coverPicture
+                        ? user.coverPicture
                         : PF + "person/noCover.png"
                     }
                     alt=""
@@ -147,7 +123,7 @@ const Profile = () => {
                   <img
                     src={
                       user?.profilePicture
-                        ? PF + user?.profilePicture
+                        ? user.profilePicture
                         : PF + "person/noAvatar.png"
                     }
                     alt=""
