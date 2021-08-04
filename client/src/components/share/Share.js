@@ -6,14 +6,16 @@ import {
   PermMedia,
   Room,
 } from "@material-ui/icons";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, uploadPostFile } from "../../actions/post";
+import { createPost } from "../../actions/post";
 
 const Share = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [file, setFile] = useState(null);
-  const desc = useRef();
+  const [postDesc, setPostDesc] = useState({
+    desc: "",
+  });
 
   const dispatch = useDispatch();
 
@@ -22,31 +24,20 @@ const Share = () => {
   const user = useSelector((state) =>
     state.userReducer.user?.find((u) => u._id === loggedUser?._id)
   );
- 
+
   const submitHandler = (e) => {
     e.preventDefault();
-    const newPost = {
-      userId: user._id,
-      desc: desc.current.value,
-    };
+    const data = new FormData();
+    data.append("userId", user._id);
+    data.append("desc", postDesc.desc);
     if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
       data.append("file", file);
-
-      newPost.img = fileName;
-      try {
-        dispatch(uploadPostFile(data));
-      } catch (error) {
-        console.log(error);
-      }
     }
-    try {
-      dispatch(createPost(newPost));
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(createPost(data));
+    setFile(null);
+    setPostDesc({
+      desc: "",
+    });
   };
 
   return (
@@ -56,7 +47,7 @@ const Share = () => {
           <img
             src={
               user?.profilePicture
-                ?  user.profilePicture
+                ? user.profilePicture
                 : PF + "person/noAvatar.png"
             }
             alt=""
@@ -65,7 +56,8 @@ const Share = () => {
           <input
             placeholder={"What's in your mind " + user?.username + "?"}
             className="shareInput"
-            ref={desc}
+            onChange={(e) => setPostDesc({ ...postDesc, desc: e.target.value })}
+            value={postDesc.desc}
           />
         </div>
         <hr className="shareHr" />
