@@ -7,9 +7,13 @@ const {
   unFollowUser,
   getFriends,
   uploadImage,
+  getUserByUsername,
 } = require("../controllers/user");
 const router = express.Router();
 const fileUploader = require("../config/cloudinary.config");
+const { isSignedIn, isAuthenticated } = require("../controllers/auth");
+
+router.param("username", getUserByUsername);
 
 //update user
 router.put("/:id", updateUser);
@@ -32,6 +36,8 @@ router.put("/:id/unfollow", unFollowUser);
 //upload image
 router.patch(
   "/:username/uploadImage",
+  isSignedIn,
+  isAuthenticated,
   fileUploader.single("file"),
   uploadImage
 );

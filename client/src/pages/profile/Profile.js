@@ -17,8 +17,11 @@ const Profile = () => {
   const { username } = useParams();
   const [file, setFile] = useState(null);
   const [profileFile, setProfileFile] = useState(null);
-  const currentUser = JSON.parse(localStorage.getItem("profile"));
+  const { user: currentUser, token } = JSON.parse(
+    localStorage.getItem("profile")
+  );
   const dispatch = useDispatch();
+
   const user = useSelector((state) =>
     state.userReducer.user?.find((u) => u.username === username)
   );
@@ -28,8 +31,8 @@ const Profile = () => {
   }, [username, dispatch]);
 
   useEffect(() => {
-    dispatch(getProfilePost(username));
-  }, [username, dispatch]);
+    dispatch(getProfilePost(username, token));
+  }, [username, dispatch, token]);
 
   const handleCoverImgUpload = (e) => {
     e.preventDefault();
@@ -37,7 +40,7 @@ const Profile = () => {
     if (file) {
       data.append("file", file);
     }
-    dispatch(uploadImage(data, username));
+    dispatch(uploadImage(data, username, token));
     setFile(null);
   };
 
@@ -49,7 +52,7 @@ const Profile = () => {
       data.append("file", profileFile);
       data.append("profile", true);
     }
-    dispatch(uploadImage(data, username));
+    dispatch(uploadImage(data, username, token));
     setProfileFile(null);
   };
 

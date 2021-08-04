@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const {user} = JSON.parse(localStorage.getItem("profile"));
   const { post } = useSelector((state) => state.postReducer);
 
   useEffect(() => {

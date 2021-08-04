@@ -9,11 +9,11 @@ import { useEffect } from "react";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const { user,token } = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
-    dispatch(getTimelinePost(user?._id));
-  }, [dispatch, user?._id]);
+    dispatch(getTimelinePost(user?._id,token));
+  }, [dispatch, user?._id,token]);
   return (
     <>
       <TopBar />

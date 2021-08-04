@@ -17,5 +17,7 @@ export const followUser = (userId, followerUserId) =>
 export const unFollowUser = (userId, followerUserId) =>
   API.put(`users/${userId}/unfollow`, followerUserId);
 
-export const uploadImage = (fileToUpload, username) =>
-  API.patch(`users/${username}/uploadImage`, fileToUpload);
+export const uploadImage = (fileToUpload, username, token) =>
+  API.patch(`users/${username}/uploadImage`, fileToUpload, {
+    headers: { Authorization: `Bearer ${token}` },
+  });

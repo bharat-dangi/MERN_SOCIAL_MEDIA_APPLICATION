@@ -5,14 +5,21 @@ const API = axios.create({
   baseURL: "http://localhost:8000/api/",
 });
 
-export const getProfilePost = (username) =>
-  API.get(`posts/profile/${username}`);
+export const getProfilePost = (username, token) =>
+  API.get(`posts/profile/${username}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
-export const getTimelinePost = (userId) => API.get(`posts/timeline/${userId}`);
+export const getTimelinePost = (userId, token) =>
+  API.get(`posts/timeline/${userId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
 export const uploadPostFile = (data) => API.post("upload", data);
 
 export const createPost = (postData) => API.post("posts", postData);
 
-export const likeAPost = (postId, likerUserId) =>
-  API.put(`posts/${postId}/like`, likerUserId);
+export const likeAPost = (postId, likerUserId, token) =>
+  API.put(`posts/${postId}/like`, likerUserId, {
+    headers: { Authorization: `Bearer ${token}` },
+  });

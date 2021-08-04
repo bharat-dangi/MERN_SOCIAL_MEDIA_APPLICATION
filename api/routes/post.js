@@ -9,11 +9,12 @@ const {
   getUserAllPosts,
 } = require("../controllers/post");
 const fileUploader = require("../config/cloudinary.config");
+const { isSignedIn } = require("../controllers/auth");
 
 const router = express.Router();
 
 //create a post
-router.post("/", fileUploader.single("file"), createAPost);
+router.post("/", isSignedIn, fileUploader.single("file"), createAPost);
 
 //update a post
 router.put("/:id", updatePost);
@@ -22,15 +23,15 @@ router.put("/:id", updatePost);
 router.delete("/:id", deletePost);
 
 //like or dislike a post
-router.put("/:id/like", likeAPost);
+router.put("/:id/like", isSignedIn, likeAPost);
 
 //get a post
-router.get("/:id", getAPost);
+router.get("/:id", isSignedIn, getAPost);
 
 //get timeline posts
-router.get("/timeline/:userId", getTimelinePosts);
+router.get("/timeline/:userId", isSignedIn, getTimelinePosts);
 
 //get user all posts
-router.get("/profile/:username", getUserAllPosts);
+router.get("/profile/:username", isSignedIn, getUserAllPosts);
 
 module.exports = router;

@@ -7,9 +7,9 @@ import {
   UPLOAD_POST_FILE,
 } from "../constants/post";
 
-export const getProfilePost = (username) => async (dispatch) => {
+export const getProfilePost = (username, token) => async (dispatch) => {
   try {
-    const { data } = await api.getProfilePost(username);
+    const { data } = await api.getProfilePost(username, token);
 
     dispatch({ type: GET_PROFILE_POST, payload: data });
   } catch (error) {
@@ -17,9 +17,9 @@ export const getProfilePost = (username) => async (dispatch) => {
   }
 };
 
-export const getTimelinePost = (userId) => async (dispatch) => {
+export const getTimelinePost = (userId, token) => async (dispatch) => {
   try {
-    const { data } = await api.getTimelinePost(userId);
+    const { data } = await api.getTimelinePost(userId, token);
 
     dispatch({ type: GET_TIMELINE_POST, payload: data });
   } catch (error) {
@@ -44,9 +44,9 @@ export const createPost = (newPost) => async (dispatch) => {
   }
 };
 
-export const likeAPost = (postId, likerUserId) => async (dispatch) => {
+export const likeAPost = (postId, likerUserId, token) => async (dispatch) => {
   try {
-    await api.likeAPost(postId, likerUserId);
+    await api.likeAPost(postId, likerUserId, token);
     dispatch({ type: LIKE_A_POST });
   } catch (error) {
     console.log(error);

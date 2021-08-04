@@ -10,7 +10,7 @@ import { fetchFriendList, followUser, unFollowUser } from "../../actions/user";
 const RightBar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
-  const currentUser = JSON.parse(localStorage.getItem("profile"));
+  const currentUser = JSON.parse(localStorage.getItem("profile")).user;
   const dispatch = useDispatch();
   const [followed, setFollowed] = useState(
     user?.followers.includes(currentUser?._id)

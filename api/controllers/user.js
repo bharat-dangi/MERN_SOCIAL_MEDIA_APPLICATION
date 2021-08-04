@@ -1,6 +1,16 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+exports.getUserByUsername = async (req, res, next, username) => {
+  try {
+    const user = await User.findOne({ username: username });
+    req.profile = user;
+  } catch (error) {
+    res.status(500).json(error);
+  }
+  next();
+};
+
 exports.updateUser = async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {

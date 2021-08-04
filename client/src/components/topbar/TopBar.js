@@ -10,7 +10,7 @@ const TopBar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const history = useHistory();
   const dispatch = useDispatch();
-  const loggedUser = JSON.parse(localStorage.getItem("profile"));
+  const loggedUser = JSON.parse(localStorage.getItem("profile")).user;
 
   const activeUser = useSelector((state) =>
     state.userReducer.user?.find((u) => u._id === loggedUser?._id)

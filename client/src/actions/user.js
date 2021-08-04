@@ -54,9 +54,9 @@ export const unFollowUser = (userId, followerUserId) => async (dispatch) => {
   }
 };
 
-export const uploadImage = (fileToUpload, username) => async (dispatch) => {
+export const uploadImage = (fileToUpload, username,token) => async (dispatch) => {
   try {
-    const { data } = await api.uploadImage(fileToUpload, username);
+    const { data } = await api.uploadImage(fileToUpload, username,token);
     if (data.profile === true) {
       dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
     } else {

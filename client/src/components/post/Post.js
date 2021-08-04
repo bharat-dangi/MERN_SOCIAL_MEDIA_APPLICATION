@@ -11,7 +11,9 @@ const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes?.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const currentUser = JSON.parse(localStorage.getItem("profile"));
+  const { user: currentUser, token } = JSON.parse(
+    localStorage.getItem("profile")
+  );
   const dispatch = useDispatch();
   const postUser = useSelector((state) =>
     post ? state.userReducer.user?.find((u) => u._id === post.userId) : null
@@ -36,7 +38,7 @@ const Post = ({ post }) => {
     const likerUserId = {
       userId: currentUser._id,
     };
-    dispatch(likeAPost(post._id, likerUserId));
+    dispatch(likeAPost(post._id, likerUserId, token));
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -49,7 +51,7 @@ const Post = ({ post }) => {
               <img
                 src={
                   user.profilePicture
-                    ?  user.profilePicture
+                    ? user.profilePicture
                     : PF + "person/noAvatar.png"
                 }
                 alt=""
