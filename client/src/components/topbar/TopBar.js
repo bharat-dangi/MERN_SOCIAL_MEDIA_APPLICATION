@@ -3,7 +3,7 @@ import { Chat, Notifications, Person, Search } from "@material-ui/icons";
 import { useEffect, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGOUT } from "../../constants/auth";
+import { signOut } from "../../actions/auth";
 
 const TopBar = () => {
   const [user, setUser] = useState();
@@ -21,8 +21,8 @@ const TopBar = () => {
   }, [activeUser]);
 
   const logOut = () => {
-    dispatch({ type: LOGOUT });
-    history.push("/login");
+    dispatch(signOut(history));
+
     setUser(null);
   };
 
@@ -74,7 +74,7 @@ const TopBar = () => {
           <img
             src={
               user?.profilePicture
-                ?user.profilePicture
+                ? user.profilePicture
                 : PF + "person/noAvatar.png"
             }
             alt=""

@@ -9,6 +9,6 @@ router.post("/register", register);
 router.post("/login", login);
 
 //LOGOUT
-router.post("/logout", logOut);
+router.get("/logout", logOut);
 
 module.exports = router;
