@@ -10,11 +10,18 @@ import {
   School,
   WorkOutline,
 } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import CloseFriend from "../closefriend/CloseFriend";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const SideBar = () => {
+  const [friends, setFriends] = useState([]);
+  const friendList = useSelector((state) => state.userReducer.friendList);
+  useEffect(() => {
+    if (friendList) setFriends(friendList);
+  }, [friendList]);
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -63,8 +70,8 @@ const SideBar = () => {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
+          {friends.map((friend) => (
+            <CloseFriend key={friend._id} user={friend} />
           ))}
         </ul>
       </div>

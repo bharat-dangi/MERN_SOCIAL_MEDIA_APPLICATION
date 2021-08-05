@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import "./rightbar.css";
 import { Link } from "react-router-dom";
@@ -19,7 +18,11 @@ const RightBar = ({ user }) => {
   const friendList = useSelector((state) => state.userReducer.friendList);
 
   useEffect(() => {
-    dispatch(fetchFriendList(user?._id));
+    if (user) {
+      dispatch(fetchFriendList(user?._id));
+    } else {
+      dispatch(fetchFriendList(currentUser?._id));
+    }
   }, [user, dispatch]);
 
   useEffect(() => {
@@ -51,11 +54,8 @@ const RightBar = ({ user }) => {
         <img src="assets/ad.png" alt="" className="rightbarAd" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
           {friends.map((friend) => (
-            <Online key={friend.id} user={friend} />
+            <Online key={friend._id} user={friend} />
           ))}
         </ul>
       </>
