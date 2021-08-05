@@ -21,7 +21,7 @@ const TopBar = () => {
   }, [activeUser]);
 
   const logOut = () => {
-    dispatch(signOut(history));
+    dispatch(signOut());
 
     setUser(null);
   };

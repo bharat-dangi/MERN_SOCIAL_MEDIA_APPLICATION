@@ -22,11 +22,23 @@ export const signUp = (formData, history) => async (dispatch) => {
   }
 };
 
-export const signOut = (history) => async (dispatch) => {
+export const signOut = () => async (dispatch) => {
   try {
     await api.signOut();
     dispatch({ type: LOGOUT });
-    history.push("/");
+    window.location.reload();
+    // history.push("/login");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const clearExpiredToken = (history) => async (dispatch) => {
+  try {
+    setTimeout(() => {
+      dispatch({ type: LOGOUT });
+      history.push("/login");
+    }, 3540000);
   } catch (error) {
     console.log(error);
   }

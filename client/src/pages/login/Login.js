@@ -3,7 +3,7 @@ import "./login.css";
 import { CircularProgress } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signIn } from "../../actions/auth";
+import { clearExpiredToken, signIn } from "../../actions/auth";
 
 const Login = () => {
   const email = useRef();
@@ -20,6 +20,7 @@ const Login = () => {
       password: password.current.value,
     };
     dispatch(signIn(user, history));
+    dispatch(clearExpiredToken(history));
   };
 
   return (
