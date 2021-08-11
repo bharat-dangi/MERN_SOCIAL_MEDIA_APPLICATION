@@ -1,0 +1,40 @@
+.friendsSuggestionWrapper {
+  width: 40%;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  margin: 30px 30px;
+}
+
+.peopleCard {
+  padding: 25px;
+}
+
+.profileImage {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+}
+
+.profileName {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.mutualFriendCount {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.addButton {
+  width: 100%;
+  margin-top: 10px;
+  height: 40px;
+  background-color: #e4e6eb;
+  border-style: none;
+  color: #69afec;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 700;
+}

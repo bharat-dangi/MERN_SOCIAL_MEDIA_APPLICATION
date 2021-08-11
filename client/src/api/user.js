@@ -21,3 +21,8 @@ export const uploadImage = (fileToUpload, username, token) =>
   API.patch(`users/${username}/uploadImage`, fileToUpload, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
+export const fetchFriendSuggestion = (username, token) =>
+  API.get(`users/${username}/getFriendSuggestion`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });

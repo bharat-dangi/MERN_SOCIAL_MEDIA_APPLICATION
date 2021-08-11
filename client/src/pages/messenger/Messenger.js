@@ -33,7 +33,7 @@ const Messenger = () => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+  }, [arrivalMessage, currentChat?.members]);
 
   useEffect(() => {
     socket.current.emit("addUser", user?._id);
@@ -42,7 +42,7 @@ const Messenger = () => {
         user.followings.filter((f) => users.some((u) => u.userId === f))
       );
     });
-  }, [user]);
+  }, [user?._id, user.followings]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -54,7 +54,7 @@ const Messenger = () => {
       }
     };
     getConversations();
-  }, [user]);
+  }, [user._id]);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -66,7 +66,7 @@ const Messenger = () => {
       }
     };
     getMessages();
-  }, [currentChat]);
+  }, [currentChat?._id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

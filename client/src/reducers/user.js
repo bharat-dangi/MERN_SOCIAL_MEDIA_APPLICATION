@@ -1,6 +1,7 @@
 import {
   FETCH_A_USER,
   FETCH_FRIEND_LIST,
+  FETCH_FRIEND_SUGGESTION,
   FETCH_POST_USER,
   FOLLOW,
   UNFOLLOW,
@@ -8,7 +9,10 @@ import {
   UPLOAD_PROFILE_IMG,
 } from "../constants/user";
 
-const userReducer = (state = { user: [], friendList: [] }, action) => {
+const userReducer = (
+  state = { user: [], friendList: [], friendSuggestion: [] },
+  action
+) => {
   switch (action.type) {
     case FETCH_A_USER:
       return { ...state, user: [...state.user, action?.payload] };
@@ -41,6 +45,12 @@ const userReducer = (state = { user: [], friendList: [] }, action) => {
             ? { ...u, profilePicture: action.payload.url }
             : u
         ),
+      };
+
+    case FETCH_FRIEND_SUGGESTION:
+      return {
+        ...state,
+        friendSuggestion: action?.payload,
       };
 
     default:

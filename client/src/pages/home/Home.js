@@ -6,14 +6,19 @@ import "./home.css";
 import { useDispatch } from "react-redux";
 import { getTimelinePost } from "../../actions/post";
 import { useEffect } from "react";
+import { fetchAUser } from "../../actions/user";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { user,token } = JSON.parse(localStorage.getItem("profile"));
+  const { user, token } = JSON.parse(localStorage.getItem("profile"));
 
   useEffect(() => {
-    dispatch(getTimelinePost(user?._id,token));
-  }, [dispatch, user?._id,token]);
+    dispatch(getTimelinePost(user?._id, token));
+  }, [dispatch, user?._id, token]);
+
+  useEffect(() => {
+    dispatch(fetchAUser(user.username));
+  }, [user.username, dispatch]);
   return (
     <>
       <TopBar />

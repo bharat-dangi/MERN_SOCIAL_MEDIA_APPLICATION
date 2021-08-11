@@ -4,18 +4,29 @@ import "./rightbar.css";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFriendList, followUser, unFollowUser } from "../../actions/user";
+import {
+  fetchAUser,
+  fetchFriendList,
+  followUser,
+  unFollowUser,
+} from "../../actions/user";
 
 const RightBar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const currentUser = JSON.parse(localStorage.getItem("profile")).user;
-  const dispatch = useDispatch();
-  const [followed, setFollowed] = useState(
-    user?.followers.includes(currentUser?._id)
-  );
-
   const friendList = useSelector((state) => state.userReducer.friendList);
+
+  const dispatch = useDispatch();
+  const [followed, setFollowed] = useState();
+
+  useEffect(() => {
+    if (user?.followers.includes(currentUser?._id)) setFollowed(true);
+  }, [currentUser?._id, user?.followers]);
+
+  useEffect(() => {
+    dispatch(fetchAUser(currentUser.username));
+  }, [currentUser.username, dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -23,7 +34,7 @@ const RightBar = ({ user }) => {
     } else {
       dispatch(fetchFriendList(currentUser?._id));
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, currentUser?._id]);
 
   useEffect(() => {
     if (friendList) setFriends(friendList);
@@ -104,7 +115,7 @@ const RightBar = ({ user }) => {
                 <img
                   src={
                     friend?.profilePicture
-                      ? PF + friend?.profilePicture
+                      ? friend?.profilePicture
                       : PF + "person/noAvatar.png"
                   }
                   alt=""

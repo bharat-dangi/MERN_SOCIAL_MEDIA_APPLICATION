@@ -1,0 +1,15 @@
+.addFriendContainer {
+  display: flex;
+  width: 100%;
+}
+
+.friendSuggestion {
+  flex: 5;
+}
+
+.friendSuggestionWrapper {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

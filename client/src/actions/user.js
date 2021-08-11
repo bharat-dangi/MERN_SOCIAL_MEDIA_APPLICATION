@@ -2,6 +2,7 @@ import * as api from "../api/user";
 import {
   FETCH_A_USER,
   FETCH_FRIEND_LIST,
+  FETCH_FRIEND_SUGGESTION,
   FETCH_POST_USER,
   FOLLOW,
   UNFOLLOW,
@@ -54,14 +55,24 @@ export const unFollowUser = (userId, followerUserId) => async (dispatch) => {
   }
 };
 
-export const uploadImage = (fileToUpload, username,token) => async (dispatch) => {
-  try {
-    const { data } = await api.uploadImage(fileToUpload, username,token);
-    if (data.profile === true) {
-      dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
-    } else {
-      dispatch({ type: UPLOAD_COVER_IMG, payload: data });
+export const uploadImage =
+  (fileToUpload, username, token) => async (dispatch) => {
+    try {
+      const { data } = await api.uploadImage(fileToUpload, username, token);
+      if (data.profile === true) {
+        dispatch({ type: UPLOAD_PROFILE_IMG, payload: data });
+      } else {
+        dispatch({ type: UPLOAD_COVER_IMG, payload: data });
+      }
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+export const fetchFriendSuggestion = (username, token) => async (dispatch) => {
+  try {
+    const { data } = await api.fetchFriendSuggestion(username, token);
+    dispatch({ type: FETCH_FRIEND_SUGGESTION, payload: data });
   } catch (error) {
     console.log(error);
   }
