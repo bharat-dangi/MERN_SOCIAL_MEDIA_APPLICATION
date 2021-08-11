@@ -176,7 +176,9 @@ exports.getFriendSuggestion = async (req, res) => {
   try {
     const totalUsers = await User.find();
     const friendSuggestion = totalUsers.filter(
-      (user) => !req.profile.followings.includes(user._id)
+      (user) =>
+        !req.profile.followings.includes(user._id) &&
+        user.username !== req.profile.username
     );
     res.status(200).json(friendSuggestion);
   } catch (error) {
