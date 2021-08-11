@@ -8,6 +8,7 @@ const {
   getFriends,
   uploadImage,
   getUserByUsername,
+  getFriendSuggestion,
 } = require("../controllers/user");
 const router = express.Router();
 const fileUploader = require("../config/cloudinary.config");
@@ -41,5 +42,8 @@ router.patch(
   fileUploader.single("file"),
   uploadImage
 );
+
+//get friend suggestion
+router.get("/:username/getFriendSuggestion", isSignedIn, getFriendSuggestion);
 
 module.exports = router;

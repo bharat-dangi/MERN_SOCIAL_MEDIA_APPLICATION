@@ -171,3 +171,15 @@ exports.uploadImage = async (req, res) => {
     }
   }
 };
+
+exports.getFriendSuggestion = async (req, res) => {
+  try {
+    const totalUsers = await User.find();
+    const friendSuggestion = totalUsers.filter(
+      (user) => !req.profile.followings.includes(user._id)
+    );
+    res.status(200).json(friendSuggestion);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
