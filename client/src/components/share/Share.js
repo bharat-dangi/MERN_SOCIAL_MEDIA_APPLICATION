@@ -19,7 +19,9 @@ const Share = () => {
 
   const dispatch = useDispatch();
 
-  const loggedUser = JSON.parse(localStorage.getItem("profile")).user;
+  const { user: loggedUser, token } = JSON.parse(
+    localStorage?.getItem("profile")
+  );
 
   const user = useSelector((state) =>
     state.userReducer.user?.find((u) => u._id === loggedUser?._id)
@@ -33,7 +35,7 @@ const Share = () => {
     if (file) {
       data.append("file", file);
     }
-    dispatch(createPost(data));
+    dispatch(createPost(data, token));
     setFile(null);
     setPostDesc({
       desc: "",

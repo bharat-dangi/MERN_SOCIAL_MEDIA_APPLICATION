@@ -17,7 +17,10 @@ export const getTimelinePost = (userId, token) =>
 
 export const uploadPostFile = (data) => API.post("upload", data);
 
-export const createPost = (postData) => API.post("posts", postData);
+export const createPost = (postData, token) =>
+  API.post("posts", postData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 
 export const likeAPost = (postId, likerUserId, token) =>
   API.put(`posts/${postId}/like`, likerUserId, {

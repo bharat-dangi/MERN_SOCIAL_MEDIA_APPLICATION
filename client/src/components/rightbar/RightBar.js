@@ -104,7 +104,7 @@ const RightBar = ({ user }) => {
             </span>
           </div>
         </div>
-        <h4 className="rightbarTitle">User Friends</h4>
+        <h4 className="rightbarTitle">Following</h4>
         <div className="rightbarFollowings">
           {friends.map((friend) => (
             <Link
