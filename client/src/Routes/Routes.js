@@ -13,7 +13,7 @@ import Register from "../pages/register/Register";
 import PrivateRoute from "./PrivateRoute";
 
 const Routes = () => {
-  const user = JSON.parse(localStorage.getItem("profile")) || null;
+  const user = JSON.parse(localStorage.getItem("profile"))?.user || null;
 
   return (
     <Router>

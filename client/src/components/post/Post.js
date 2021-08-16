@@ -11,9 +11,9 @@ const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes?.length);
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState({});
-  const { user: currentUser, token } = JSON.parse(
-    localStorage.getItem("profile")
-  );
+  const currentUser = JSON.parse(localStorage.getItem("profile"))?.user;
+  const token = JSON.parse(localStorage.getItem("profile"))?.token;
+
   const dispatch = useDispatch();
   const postUser = useSelector((state) =>
     post ? state.userReducer.user?.find((u) => u._id === post.userId) : null

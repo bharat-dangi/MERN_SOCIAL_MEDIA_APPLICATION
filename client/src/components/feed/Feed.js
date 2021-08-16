@@ -7,7 +7,7 @@ import { CircularProgress } from "@material-ui/core";
 
 const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
-  const { user } = JSON.parse(localStorage?.getItem("profile"));
+  const user  = JSON.parse(localStorage.getItem("profile"))?.user;
   const { post } = useSelector((state) => state.postReducer);
   const { isLoading } = useSelector((state) => state.authReducer);
 

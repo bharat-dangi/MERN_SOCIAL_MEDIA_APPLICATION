@@ -19,9 +19,8 @@ const Share = () => {
 
   const dispatch = useDispatch();
 
-  const { user: loggedUser, token } = JSON.parse(
-    localStorage?.getItem("profile")
-  );
+  const token = JSON.parse(localStorage.getItem("profile"))?.token;
+  const loggedUser = JSON.parse(localStorage.getItem("profile"))?.user;
 
   const user = useSelector((state) =>
     state.userReducer.user?.find((u) => u._id === loggedUser?._id)
