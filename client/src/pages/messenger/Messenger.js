@@ -6,6 +6,8 @@ import ChatOnline from "../../components/chatOnline/ChatOnline";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { useDispatch } from "react-redux";
+import { fetchAUser } from "../../actions/user";
 
 const Messenger = () => {
   const [conversations, setConversations] = useState([]);
@@ -17,6 +19,11 @@ const Messenger = () => {
   const { user } = JSON.parse(localStorage.getItem("profile"));
   const scrollRef = useRef();
   const socket = useRef();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAUser(user.username));
+  }, [user.username, dispatch]);
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
