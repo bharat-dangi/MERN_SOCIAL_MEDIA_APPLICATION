@@ -2,13 +2,13 @@ import { useRef } from "react";
 import "./login.css";
 import { CircularProgress } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearExpiredToken, signIn } from "../../actions/auth";
 
 const Login = () => {
   const email = useRef();
   const password = useRef();
-  const isFetching = false;
+  const { isLoading } = useSelector((state) => state.authReducer);
   const error = false;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -52,8 +52,8 @@ const Login = () => {
             <div className="errorMessageContainer">
               <span className="errorMessage">{error}</span>
             </div>
-            <button className="loginButton" disabled={isFetching}>
-              {isFetching ? (
+            <button className="loginButton" disabled={isLoading}>
+              {isLoading ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
                 "Log In"
@@ -66,7 +66,7 @@ const Login = () => {
               style={{ textDecoration: "none" }}
             >
               <div className="loginRegisterButtonText">
-                {isFetching ? (
+                {isLoading ? (
                   <CircularProgress color="white" size="20px" />
                 ) : (
                   "Create a New Account"

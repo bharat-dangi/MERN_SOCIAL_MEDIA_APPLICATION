@@ -6,7 +6,7 @@ import {
   START_LOADING,
 } from "../constants/auth";
 
-const authReducer = (state = { authData: null, isLoading: true }, action) => {
+const authReducer = (state = { authData: null, isLoading: false }, action) => {
   switch (action.type) {
     case SIGNIN:
     case SIGNUP:

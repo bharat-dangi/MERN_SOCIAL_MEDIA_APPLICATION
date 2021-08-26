@@ -1,10 +1,18 @@
 import * as api from "../api/auth";
-import { LOGOUT, SIGNIN, SIGNUP } from "../constants/auth";
+import {
+  END_LOADING,
+  LOGOUT,
+  SIGNIN,
+  SIGNUP,
+  START_LOADING,
+} from "../constants/auth";
 
 export const signIn = (formData, history) => async (dispatch) => {
   try {
+    dispatch({ type: START_LOADING });
     const { data } = await api.signIn(formData);
     dispatch({ type: SIGNIN, payload: data });
+    dispatch({ type: END_LOADING });
     history.push("/");
   } catch (error) {
     console.log(error);
